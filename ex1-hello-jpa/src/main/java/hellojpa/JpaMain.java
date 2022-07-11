@@ -21,11 +21,16 @@ public class JpaMain {
         try {
 
             // INSERT
+                // 비영속
 //            Member member = new Member();
-//
 //            member.setId(2L);
 //            member.setName("HelloBR");
+                // 영속
 //            em.persist(member);
+            //회원 엔티티를 영속성 컨텍스트에서 분리, 준영속 상태
+            //em.detach(member);
+            //객체를 삭제한 상태(삭제)
+            //em.remove(member);
 
             // UPDATE
             // Member findMember = em.find(Member.class, 2L);
@@ -38,7 +43,7 @@ public class JpaMain {
                 System.out.println("member.name = " + member.getName());
             }
 
-            // em.persist(findMember); 를 할 필요 없음.
+            // UPDATE는 em.persist(findMember); 를 할 필요 없음.
 
             // DELETE
             // em.remove(findMember);
