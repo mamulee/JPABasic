@@ -2,6 +2,8 @@ package jpabook.jpashop.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
@@ -13,12 +15,25 @@ public class Order {
 
     // 객체지향스럽지 않은 설계.
     // id 대신 Member 객체를 바로 불러올 수 있는 것이 좋다.
-    @Column(name = "MEMBER_ID")
-    private Long memberId;
+//    @Column(name = "MEMBER_ID")
+//    private Long memberId;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
 
     public Long getId() {
         return id;
@@ -28,12 +43,21 @@ public class Order {
         this.id = id;
     }
 
-    public Long getMemberId() {
-        return memberId;
+//    public Long getMemberId() {
+//        return memberId;
+//    }
+//
+//    public void setMemberId(Long memberId) {
+//        this.memberId = memberId;
+//    }
+
+
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public LocalDateTime getOrderDate() {
